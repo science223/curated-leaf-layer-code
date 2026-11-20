@@ -1,0 +1,3 @@
+async function craftWoodenPickaxe(bot) {
+    // The function ensures the bot can craft a wooden pickaxe by first obtaining or crafting a crafting table, placing it nearby if necessary, and then gathering enough planks and sticks. It checks inventory for planks and logs, mines a log if needed, and crafts planks and sticks as required. Finally, it crafts one wooden pickaxe using the crafting table.
+}

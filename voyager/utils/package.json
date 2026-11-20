@@ -1,0 +1,11 @@
+{
+  "name": "voyager-js-parse",
+  "private": true,
+  "description": "解析生成代码所需的 babel。独立于 JSPyBridge——它的 @babel/core 是第一次 require 时联网现装的，不随 pip 包分发，换机器会缺。",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "dependencies": {
+    "@babel/core": "7.29.0",
+    "@babel/generator": "7.29.0"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "_doc": "2026-09-11 统一 lane 端口表。两机内容必须一致。规则: MC = 25600 + 10*machine + lane, bridge = 3100 + 10*machine + lane。任何新调度器只从这里取端口,不再在脚本里手写。",
+  "_avoid": {
+    "25565": "mc_template server-port 与 query.port 的默认值",
+    "25575": "mc_template rcon.port(rcon 关着,但任何 lane 打开 rcon 就会互撞)",
+    "25565-25568/3000-3003": "旧 ~/mc_server_lanes lane0-3",
+    "25571-25593/3011-3028": "0909/0910 批次用过(2026-09-10T17:07Z 起两机均已释放,但旧脚本仍写死这些号,别混用)"
+  },
+  "_history": [
+    "2026-09-10T16:33Z admin1 lane8 (25618/3118) smoke_or: 包装进程被中途停,MC pid 905 成孤儿;WSL 实例自行关闭后消失,21:25Z 复查端口已空。lane 目录 runs_0911/smoke_or/server 仍在,重跑须换后缀",
+    "2026-09-10T16:34Z admin1 lane9 (25619/3119) smoke_orpro: 正常结束,MC 已停"
+  ],
+  "machines": {
+    "admin1": {
+      "machine": 1,
+      "host": "本机 Windows 的 WSL Ubuntu, 用户 admin1, ROOT=/home/user/Voyager_0909",
+      "max_parallel": 3,
+      "_max_parallel_basis": "WSL memory=16GB(可见15G);实测峰值 7.2+3.2*(n-1) GB,n=3 → 13.6G",
+      "lanes": {
+        "0": {
+          "mc": 25610,
+          "bridge": 3110
+        },
+        "1": {
+          "mc": 25611,
+          "bridge": 3111
+        },
+        "2": {
+          "mc": 25612,
+          "bridge": 3112
+        },
+        "8": {
+          "mc": 25618,
+          "bridge": 3118,
+          "use": "smoke"
+        },
+        "9": {
+          "mc": 25619,
+          "bridge": 3119,
+          "use": "smoke"
+        }
+      }
+    },
+    "slac002": {
+      "machine": 2,
+      "host": "ssh slac002 (Windows OpenSSH) → wsl -d Ubuntu, 用户 user, ROOT=/home/user/Voyager_0909",
+      "max_parallel": 4,
+      "_max_parallel_basis": "可见 23G;n=5 峰值 20.0G 太贴边,取 4 → 16.8G",
+      "java17": "/home/user/Voyager_0909/toolchain/java-17-openjdk-amd64/bin/java",
+      "lanes": {
+        "0": {
+          "mc": 25620,
+          "bridge": 3120
+        },
+        "1": {
+          "mc": 25621,
+          "bridge": 3121
+        },
+        "2": {
+          "mc": 25622,
+          "bridge": 3122
+        },
+        "3": {
+          "mc": 25623,
+          "bridge": 3123
+        },
+        "8": {
+          "mc": 25628,
+          "bridge": 3128,
+          "use": "smoke"
+        },
+        "9": {
+          "mc": 25629,
+          "bridge": 3129,
+          "use": "smoke"
+        }
+      }
+    },
+    "local": {
+      "machine": 3,
+      "host": "any other machine: run the launchers with --machine local (launch_zs plans also need --ignore-machine)",
+      "max_parallel": 1,
+      "_max_parallel_basis": "one lane peaks at about 4 GB (MC + node bridge + python); raise it only with enough RAM",
+      "lanes": {
+        "0": {
+          "mc": 25630,
+          "bridge": 3130
+        },
+        "1": {
+          "mc": 25631,
+          "bridge": 3131
+        },
+        "2": {
+          "mc": 25632,
+          "bridge": 3132
+        },
+        "3": {
+          "mc": 25633,
+          "bridge": 3133
+        },
+        "8": {
+          "mc": 25638,
+          "bridge": 3138,
+          "use": "smoke"
+        },
+        "9": {
+          "mc": 25639,
+          "bridge": 3139,
+          "use": "smoke"
+        }
+      },
+      "_lanes_note": "E9 lineages keep to lanes 3, 1 and 2 (plans zs_e9*_life_L1..L3); smoke uses 8"
+    }
+  }
+}

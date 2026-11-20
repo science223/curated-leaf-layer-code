@@ -1,0 +1,3 @@
+async function equipIronHelmet(bot) {
+    // The function equips an iron helmet from the inventory onto the bot's head. It first searches for an iron helmet in the inventory and stops if none is found. It then checks whether an iron helmet is already equipped in the head slot and returns if so. Otherwise, it equips the found helmet to the head.
+}

@@ -1,0 +1,3 @@
+async function craftSticks(bot) {
+    // The function ensures there are at least two wooden planks available, gathering logs and crafting planks if needed, then crafts sticks from the planks. It first checks the inventory for planks, and if insufficient, searches for a nearby log block, mines it, and converts it into planks. Once enough planks are present, it crafts one recipe of sticks, yielding four sticks, and reports the total stick count.
+}

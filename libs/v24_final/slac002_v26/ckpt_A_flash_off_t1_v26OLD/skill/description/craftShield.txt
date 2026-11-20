@@ -1,0 +1,3 @@
+async function craftShield(bot) {
+    // The function crafts a shield by first verifying the inventory contains at least one iron ingot and six wooden planks, returning early if iron is missing. If planks are insufficient, it locates or mines a log, converts it into the matching plank type, and crafts enough planks. It then ensures a crafting table is nearby, placing one from inventory if needed. Finally, it crafts one shield and reports the total number of shields in the inventory.
+}

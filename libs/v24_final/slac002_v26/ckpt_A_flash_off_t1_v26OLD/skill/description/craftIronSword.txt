@@ -1,0 +1,3 @@
+async function craftIronSword(bot) {
+    // The function ensures the bot has the necessary materials and tools to craft an iron sword. It first checks for at least two iron ingots and one stick, gathering wood and crafting sticks if needed. If no crafting table is nearby, it places one from inventory. Finally, it crafts an iron sword and reports the total count.
+}

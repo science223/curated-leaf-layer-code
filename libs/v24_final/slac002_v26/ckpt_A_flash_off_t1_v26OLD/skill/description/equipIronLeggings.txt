@@ -1,0 +1,3 @@
+async function equipIronLeggings(bot) {
+    // The function checks whether iron leggings are already equipped in the legs slot and exits early if so. If not, it searches the inventory for iron leggings and stops if none are found. When iron leggings are available, it equips them to the legs slot.
+}

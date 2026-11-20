@@ -1,0 +1,3 @@
+async function mineIronOre(bot) {
+    // The function ensures the bot has at least three raw iron by checking current inventory and mining iron ore if needed. It first counts existing raw iron and stops if the target is already met. It then verifies a stone pickaxe or better is available before proceeding. If iron ore is not nearby, it explores downward in random directions until ore is found. It mines the remaining required iron ore, retrying up to 15 times, and updates the count after each attempt.
+}

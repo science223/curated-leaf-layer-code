@@ -1,0 +1,3 @@
+async function craftIronPickaxe(bot) {
+    // The function crafts an iron pickaxe by ensuring the necessary materials are available. It first checks for three iron ingots, mining and smelting raw iron if needed. Then it ensures two sticks are available, crafting them from planks or logs as necessary. It also ensures a crafting table is nearby, placing or crafting one if required. Finally, it crafts the iron pickaxe.
+}

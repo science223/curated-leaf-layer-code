@@ -1,0 +1,3 @@
+async function killOneCreeper(bot) {
+    // The function is about locating and killing a single creeper. It first checks for a nearby creeper within 32 blocks; if none is found, it explores in a random direction for up to 60 seconds to locate one. If still no creeper is found, it stops. Otherwise, it equips the best available sword from a prioritized list and equips a shield in the off-hand if available. Finally, it attacks and kills the creeper.
+}

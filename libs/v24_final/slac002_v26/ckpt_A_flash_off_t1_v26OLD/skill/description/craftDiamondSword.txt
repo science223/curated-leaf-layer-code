@@ -1,0 +1,3 @@
+async function craftDiamondSword(bot) {
+    // The function crafts a diamond sword by first ensuring two diamonds are available, mining diamond ore with a suitable pickaxe and exploring downward if none are nearby. It then ensures at least one stick exists, crafting planks from logs if necessary. Next, it guarantees a crafting table is nearby, crafting and placing one if needed. Finally, it crafts the diamond sword and verifies the total count.
+}

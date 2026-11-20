@@ -1,0 +1,3 @@
+async function craftCraftingTable(bot) {
+    // The function ensures a crafting table is available by first checking if one already exists in the inventory and returning early if so. If not, it counts the available jungle planks and, if fewer than four, calculates how many jungle logs are needed to craft the missing planks. If there are not enough logs, it mines the required number of jungle logs. It then crafts the necessary jungle planks and finally crafts one crafting table.
+}

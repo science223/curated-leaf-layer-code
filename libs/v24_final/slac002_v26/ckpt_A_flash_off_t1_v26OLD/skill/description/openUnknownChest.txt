@@ -1,0 +1,3 @@
+async function openUnknownChest(bot) {
+    // The function opens and inspects a chest at a fixed position by delegating to a helper that verifies the block is a chest, navigates adjacent to it using multiple pathfinding goals, and opens the container. If the chest is reachable and still present, it looks at it, opens it, and lists the contents or reports that it is empty. It then closes the chest.
+}

@@ -1,0 +1,3 @@
+async function craftLightningRod(bot) {
+    // The function crafts a lightning rod after verifying at least three copper ingots are in the inventory. It then locates a nearby crafting table or places one from inventory at a suitable adjacent position. Once a crafting table is available, it crafts one lightning rod and reports the total count.
+}

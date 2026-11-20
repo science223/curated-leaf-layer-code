@@ -1,0 +1,3 @@
+async function smeltRawCopper(bot) {
+    // The function smelts 16 raw copper into copper ingots, first checking if enough ingots already exist and mining additional copper ore if needed. It then determines a suitable fuel by checking the inventory for coal, charcoal, planks, or logs, mining coal or chopping a log if none is available. A furnace is located or placed nearby, and the fuel is re-verified before smelting. Finally, it smelts the raw copper and reports the total ingot count.
+}

@@ -1,0 +1,3 @@
+async function craftIronLeggings(bot) {
+    // The function crafts iron leggings by first checking that at least 7 iron ingots are in the inventory, returning early if not. It then looks for a nearby crafting table block within 32 blocks, and if none exists, places a crafting table item from the inventory at an offset position. If placing the table fails or no table item is available, it stops. Once a crafting table is confirmed nearby, it crafts one pair of iron leggings and reports the total count afterward.
+}

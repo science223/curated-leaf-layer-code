@@ -1,0 +1,3 @@
+async function craftTorches(bot) {
+    // The function ensures the bot has at least one stick and one coal or charcoal before crafting torches. If sticks are missing, it obtains planks by crafting from logs or mining a log if necessary, then crafts sticks. If coal is missing, it searches for and mines coal ore, exploring in random directions if needed. Finally, it crafts torches and reports the total number of torches in the inventory.
+}

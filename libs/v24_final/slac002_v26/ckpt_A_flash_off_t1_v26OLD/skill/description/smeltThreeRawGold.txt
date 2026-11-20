@@ -1,0 +1,3 @@
+async function smeltThreeRawGold(bot) {
+    // The function smelts three raw gold into gold ingots, first ensuring at least three raw gold are available by mining gold ore with a suitable pickaxe if needed. It then finds a reliable fuel source such as coal, charcoal, planks, or logs, mining or crafting one if none is present. Next, it locates a nearby furnace or places one from inventory. Before smelting, it re-verifies the fuel is still in inventory. Finally, it smelts the raw gold using the chosen fuel and reports the total gold ingots obtained.
+}

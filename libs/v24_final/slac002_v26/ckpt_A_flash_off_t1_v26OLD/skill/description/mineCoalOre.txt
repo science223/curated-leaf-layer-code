@@ -1,0 +1,3 @@
+async function mineCoalOre(bot) {
+    // The function ensures a pickaxe is available by crafting a wooden one if necessary, gathering logs and sticks as needed. It then checks how much coal is already in the inventory and calculates how many more are needed to reach three. If more coal is required, it searches for nearby coal ore, exploring in random directions if none is found. Once coal ore is located, it mines the required amount and repeats until three coal are collected. If no coal ore can be found, it stops and reports failure.
+}

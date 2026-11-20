@@ -1,0 +1,9 @@
+Multiplayer-Server-Pause-1.19-Fabric-1.1.0.jar
+better-respawn-fabric-1.19-2.0.0.jar
+completeconfig-2.0.0.jar
+fabric-api-0.58.0+1.19.jar
+
+server jars (not redistributed):
+1.19-server.jar
+fabric-server-launch.jar
+server.jar

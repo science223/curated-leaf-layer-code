@@ -1,0 +1,3 @@
+async function mineThreeDiamonds(bot) {
+    // The function mines three diamonds by first verifying the player has an iron, diamond, or netherite pickaxe, aborting if none is found. It then frees inventory space by dropping junk blocks like cobblestone and dirt until at least three slots are empty. Next, it repeatedly searches for diamond ore within 32 blocks, exploring in random downward or diagonal directions if none is nearby. Each found diamond ore is mined one block at a time, with additional junk dropped as needed to keep space for drops. The loop continues until three diamonds have been collected or forty attempts are exhausted. Finally, it reports how many diamonds were gained and the total diamond count in the inventory.
+}

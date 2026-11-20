@@ -1,0 +1,3 @@
+async function equipIronChestplate(bot) {
+    // The function equips an iron chestplate from the inventory onto the torso. It first searches for an iron chestplate in the inventory and stops if none is found. It then checks whether an iron chestplate is already equipped in the torso slot and stops if so. If not already equipped, it equips the found chestplate to the torso.
+}

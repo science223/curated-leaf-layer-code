@@ -1,0 +1,3 @@
+async function mineCopperOre(bot) {
+    // The function ensures a suitable pickaxe (stone or better) is available before mining copper ore, then checks how much raw copper is already in the inventory and calculates how many more are needed to reach a target of three. If enough raw copper is already present, it stops early. Otherwise, it repeatedly searches for nearby copper ore, exploring in random directions if none is found, and mines enough ore blocks to meet the remaining requirement. It retries up to ten times and stops once the target amount of raw copper is collected.
+}

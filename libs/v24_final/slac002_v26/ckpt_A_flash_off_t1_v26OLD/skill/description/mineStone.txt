@@ -1,0 +1,3 @@
+async function mineStone(bot) {
+    // The function ensures a pickaxe is available by checking the inventory and crafting a wooden pickaxe if needed, gathering logs, planks, and sticks as required. It then searches for nearby stone blocks, exploring downward if none are found. Once stone is located, it mines three stone blocks. If no stone can be found, it stops and reports failure.
+}

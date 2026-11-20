@@ -1,0 +1,3 @@
+async function mineCobblestone(bot) {
+    // The function ensures a pickaxe is available by crafting a wooden one if necessary, gathering logs and sticks as needed. It then checks the current cobblestone count and calculates how many more are needed to reach a target of eight. If more are needed, it searches for nearby stone blocks, exploring in random directions if none are found. It mines the required amount of stone, converting it to cobblestone, and repeats until the target is met or ten attempts are made. Finally, it reports the total cobblestone collected.
+}

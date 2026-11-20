@@ -1,0 +1,3 @@
+async function equipDiamondLeggings(bot) {
+    // The function checks whether diamond leggings are already equipped in the legs armor slot and exits if so. If not, it searches the inventory for diamond leggings and stops if none are found. When found, it equips the leggings to the legs slot.
+}

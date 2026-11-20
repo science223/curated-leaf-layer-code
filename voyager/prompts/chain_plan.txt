@@ -1,0 +1,24 @@
+You are planning a linear skill chain for a Minecraft agent.
+
+Given the current task, context, observation summary, and the full skill catalog, output a JSON array of nodes. There is no chain-length cap; the chain is the task's prerequisite expansion. Prefer reusing catalog skills. Quantity should go into a skill parameter when the signature has one (for example count); use node field "repeat" only when a parameter cannot absorb the repetition.
+
+Each node must be an object:
+{"goal": string, "verb": string, "target": string, "skill": name or null, "args": object, "repeat": integer}
+
+Rules:
+1) "skill" must be a name from the catalog, or null if no catalog skill covers that node. Never invent a skill name.
+2) "args" keys must be parameter names from that skill's signature (never "bot"). Values must be JSON literals (string, number, boolean, or null). Do not put expressions, identifiers, or nested objects/arrays in args.
+3) "repeat" is an integer multiplier >= 1. Default 1.
+4) Reply with ONLY a JSON array. No markdown, no commentary.
+
+Task:
+{task}
+
+Context:
+{context}
+
+Observation:
+{observation}
+
+Skill catalog (name(signature) — one-line description):
+{catalog}

@@ -1,0 +1,3 @@
+async function smeltRawIronIntoIngots(bot) {
+    // The function smelts 13 raw iron into iron ingots, first verifying enough raw iron is in the inventory. It then locates a nearby furnace or places one from inventory if needed. A suitable fuel is determined from coal, charcoal, planks, or logs, and if none exists, it mines coal ore or a log to craft planks. Finally, it smelts the raw iron using the chosen fuel and reports the total iron ingots obtained.
+}

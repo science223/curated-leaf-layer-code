@@ -1,0 +1,76 @@
+async function mineThreeDiamondOre(bot) {
+  const goodPickaxes = ["iron_pickaxe", "diamond_pickaxe", "netherite_pickaxe"];
+  const countDiamonds = () => bot.inventory.items().filter(i => i.name === "diamond").reduce((s, i) => s + i.count, 0);
+
+  // 1) Ensure we have a suitable pickaxe
+  const hasPickaxe = bot.inventory.items().some(i => goodPickaxes.includes(i.name));
+  if (!hasPickaxe) {
+    bot.chat("No iron-or-better pickaxe found. Cannot mine diamond ore.");
+    return;
+  }
+  bot.chat("Have a suitable pickaxe, searching for diamond ore...");
+
+  // 2) Aggressively free inventory space so drops can be picked up
+  const junkNames = ["cobblestone", "cobbled_deepslate", "andesite", "diorite", "granite", "gravel", "dirt", "sand", "tuff", "deepslate", "stone", "netherrack", "basalt", "blackstone", "calcite", "smooth_basalt"];
+  const freeSpace = async targetSlots => {
+    let attemptsFree = 0;
+    while (bot.inventory.emptySlotCount() < targetSlots && attemptsFree < 60) {
+      attemptsFree++;
+      const junk = bot.inventory.items().find(i => junkNames.includes(i.name));
+      if (!junk) break;
+      bot.chat(`Inventory tight, dropping ${junk.name} x${junk.count} to make room.`);
+      try {
+        await bot.toss(junk.type, null, junk.count);
+      } catch (e) {
+        bot.chat(`Failed to drop ${junk.name}: ${e.message}`);
+        break;
+      }
+    }
+  };
+  await freeSpace(5);
+  bot.chat(`Free slots now: ${bot.inventory.emptySlotCount()}`);
+
+  // 3) Mine diamond ore until we have mined 3 blocks
+  const before = countDiamonds();
+  let minedCount = 0;
+  let attempts = 0;
+  while (minedCount < 3 && attempts < 40) {
+    attempts++;
+
+    // Keep some room for drops
+    if (bot.inventory.emptySlotCount() < 2) {
+      await freeSpace(3);
+    }
+    let diamondBlock = bot.findBlock({
+      matching: block => block.name === "diamond_ore" || block.name === "deepslate_diamond_ore",
+      maxDistance: 32
+    });
+    if (!diamondBlock) {
+      bot.chat(`No diamond ore nearby, exploring (attempt ${attempts})...`);
+      const directions = [new Vec3(0, -1, 0), new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1), new Vec3(1, -1, 1), new Vec3(-1, -1, -1), new Vec3(1, 0, 1), new Vec3(-1, 0, -1)];
+      const dir = directions[Math.floor(Math.random() * directions.length)];
+      diamondBlock = await exploreUntil(bot, dir, 60, () => {
+        return bot.findBlock({
+          matching: block => block.name === "diamond_ore" || block.name === "deepslate_diamond_ore",
+          maxDistance: 32
+        });
+      });
+    }
+    if (!diamondBlock) {
+      bot.chat("Failed to find any diamond ore this attempt.");
+      continue;
+    }
+    bot.chat(`Found ${diamondBlock.name}, mining...`);
+    try {
+      await mineBlock(bot, diamondBlock.name, 1);
+      minedCount++;
+    } catch (e) {
+      bot.chat(`Error mining ${diamondBlock.name}: ${e.message}`);
+    }
+    bot.chat(`Mined ${minedCount} diamond ore block(s) so far. Diamonds: ${countDiamonds()}.`);
+  }
+
+  // 4) Verify
+  const after = countDiamonds();
+  bot.chat(`Done. Mined ${minedCount} diamond ore block(s). Diamonds gained: ${after - before}. Total diamonds in inventory: ${after}.`);
+}

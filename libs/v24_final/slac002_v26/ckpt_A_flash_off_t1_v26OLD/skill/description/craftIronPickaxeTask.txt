@@ -1,0 +1,3 @@
+async function craftIronPickaxeTask(bot) {
+    // The function ensures the bot has the materials and setup needed to craft an iron pickaxe. It first checks for at least 3 iron ingots and stops if there are not enough. It then checks for at least 2 sticks, gathering logs, crafting planks, and crafting sticks if necessary. Next, it ensures a nearby crafting table exists, placing one from inventory if needed. Finally, it crafts an iron pickaxe and reports the total number in inventory.
+}

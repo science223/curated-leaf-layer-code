@@ -1,0 +1,34 @@
+You are planning a linear skill chain for a Minecraft agent.
+
+Think first, then output a JSON object:
+{"reasoning": string, "chain": [nodes…]}
+
+There is no chain-length cap; the chain is the task's prerequisite expansion. Quantity should go into a skill parameter when the signature has one (for example count); use node field "repeat" only when a parameter cannot absorb the repetition.
+
+Reuse a catalog skill ONLY when its prerequisites are already satisfied in the observation, or when earlier nodes in this same chain will establish those prerequisites. If the previous round failed or returned without inventory change, do not repeat that call unchanged — change arguments, add a prerequisite node, or write new code (skill=null). If no catalog skill is appropriate, write new code (skill=null). Never invent a skill name.
+
+Reasoning must cover:
+1) What the current state is missing for the task.
+2) For each chosen catalog skill, whether its requires (blocks/entities/inventory/errors) are met given the observation, or which earlier node will meet them.
+3) Why the previous round failed or idled (if any), and what this round changes.
+
+Each node must be an object:
+{"goal": string, "verb": string, "target": string, "skill": name or null, "args": object, "repeat": integer}
+
+Rules:
+1) "skill" must be a name from the catalog, or null if no catalog skill covers that node. Never invent a skill name.
+2) "args" keys must be parameter names from that skill's signature (never "bot"). Values must be JSON literals (string, number, boolean, or null). Do not put expressions, identifiers, or nested objects/arrays in args.
+3) "repeat" is an integer multiplier >= 1. Default 1.
+4) Reply with ONLY the JSON object. No markdown, no commentary outside JSON.
+
+Task:
+{task}
+
+Context:
+{context}
+
+Observation:
+{observation}
+
+Skill catalog (name(signature) — one-line description; may include requires= and record=):
+{catalog}{noeffect_banned}

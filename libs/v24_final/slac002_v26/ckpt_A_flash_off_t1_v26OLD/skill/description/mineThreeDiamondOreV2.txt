@@ -1,0 +1,3 @@
+async function mineThreeDiamondOre(bot) {
+    // The function mines three diamond ore blocks using a suitable pickaxe, requiring at least an iron pickaxe in the inventory. It first checks for a valid pickaxe and stops if none is found. It then frees inventory space by dropping junk items to ensure room for collected drops. While fewer than three diamond ore blocks have been mined, it searches for nearby diamond ore, explores in random downward directions if none is found, and mines one block at a time. It also drops more junk if inventory space becomes low during mining. Finally, it reports how many diamond ore blocks were mined and how many diamonds were gained.
+}

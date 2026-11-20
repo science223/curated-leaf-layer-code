@@ -1,0 +1,3 @@
+async function smeltRawIron(bot) {
+    // The function smelts two raw iron into iron ingots using a furnace and fuel. It first checks that at least two raw iron are in the inventory, aborting if not. It then looks for coal or charcoal as fuel, mining coal ore if neither is available. If no furnace is nearby, it places one from the inventory at a nearby position. Finally, it smelts the raw iron and reports the total iron ingots obtained.
+}

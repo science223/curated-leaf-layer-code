@@ -1,0 +1,3 @@
+async function craftStonePickaxe(bot) {
+    // The function ensures the necessary materials are available to craft a stone pickaxe, starting by checking for at least three cobblestone and mining more if needed. It then verifies there are two sticks, crafting them from planks or logs if necessary, which may involve mining a log. Next, it ensures a crafting table is nearby, crafting and placing one if it is missing. Finally, it crafts a stone pickaxe using the gathered materials.
+}

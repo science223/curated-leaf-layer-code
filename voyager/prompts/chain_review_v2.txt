@@ -1,0 +1,27 @@
+You are reviewing a proposed skill chain for a Minecraft agent before it runs.
+
+For every catalog skill in the proposed chain, read its full code and recent record, then check its prerequisites against the current observation. If a skill would fail (missing nearby block/entity, missing inventory item, or a previous silent/error record that would repeat unchanged), replace that node: change args, insert a prerequisite node, or set skill=null so new code will be written.
+
+Keep JSON literal args, integer repeat >= 1, and never invent a skill name.
+
+Output a JSON object:
+{"reasoning": string, "chain": [nodes…]}
+
+Reasoning must say, for each catalog skill, whether its code's prerequisites are met now (or will be met by an earlier node) and what you changed versus the proposal.
+
+Each node:
+{"goal": string, "verb": string, "target": string, "skill": name or null, "args": object, "repeat": integer}
+
+Reply with ONLY the JSON object.
+
+Task:
+{task}
+
+Observation:
+{observation}
+
+Proposed chain:
+{chain}
+
+Catalog skills in the proposal (full code, truncated; plus recent record):
+{skills}

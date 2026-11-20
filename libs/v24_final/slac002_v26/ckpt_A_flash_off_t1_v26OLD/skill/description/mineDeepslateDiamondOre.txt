@@ -1,0 +1,3 @@
+async function mineDeepslateDiamondOre(bot) {
+    // The function checks for a suitable pickaxe (iron, diamond, or netherite) and stops if none is available. It then searches nearby for deepslate diamond ore within 32 blocks. If not found, it explores in random downward-biased directions up to 20 attempts. Once located, it mines one deepslate diamond ore block. Finally, it counts and reports the total diamonds in the inventory.
+}

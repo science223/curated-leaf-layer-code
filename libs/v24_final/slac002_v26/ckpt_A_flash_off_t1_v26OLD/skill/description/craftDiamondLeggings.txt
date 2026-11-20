@@ -1,0 +1,3 @@
+async function craftDiamondLeggings(bot) {
+    // The function crafts a pair of diamond leggings by first ensuring at least seven diamonds are available, mining diamond ore with a suitable pickaxe if needed. If diamonds are insufficient, it searches for diamond ore nearby or explores in random downward directions until enough are collected. It then ensures a crafting table is nearby, placing one from inventory if necessary. Finally, it crafts the diamond leggings and verifies the result.
+}

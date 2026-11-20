@@ -1,0 +1,3 @@
+async function checkUnknownChest(bot) {
+    // The function checks the contents of a chest located at a specific position. It first verifies that a chest exists at that location, then moves the bot adjacent to it using multiple pathfinding goals. If the chest is reachable, it looks at the chest and opens it. It then lists the items inside, or reports that the chest is empty, and finally closes the chest.
+}

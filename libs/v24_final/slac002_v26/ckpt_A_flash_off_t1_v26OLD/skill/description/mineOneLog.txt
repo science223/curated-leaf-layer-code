@@ -1,0 +1,3 @@
+async function mineOneLog(bot) {
+    // The function checks whether any type of log is already in the inventory and stops if one is found. If none is present, it searches nearby for a log block within a certain distance. If no log is found nearby, it explores in a random direction until a log is located or a time limit is reached. Once a log is found, it mines exactly one log block. If no log can be found, it reports failure and ends.
+}

@@ -1,0 +1,105 @@
+{
+  "_comment": "Vanilla Minecraft 1.19 recipe chains. Shared across arms. No Place subgoals. Wood is generic log/planks so verify.py species mapping applies. 1 coal smelts 8 items, enough for every task below.",
+  "seed": 20260902099,
+  "_derivation": {
+    "shared_through_iron_pickaxe": {
+      "logs": "3 log → 12 planks",
+      "crafting_table": "4 planks → 1 crafting_table (8 planks left)",
+      "sticks": "4 planks → 8 stick (4 planks left). wooden/stone/iron/diamond pickaxe each need 2 stick → 8 stick; golden sword needs 1 extra from the leftover after iron pickaxe.",
+      "wooden_pickaxe": "3 planks + 2 stick (1 plank leftover, unused)",
+      "cobblestone": "3 (stone pickaxe) + 8 (furnace) = 11",
+      "stone_pickaxe": "3 cobblestone + 2 stick",
+      "furnace": "8 cobblestone",
+      "fuel": "1 coal_ore → 1 coal; coal smelts 8. diamond pickaxe uses 3, golden sword 3+2=5, compass 3+4=7, lava bucket 3."
+    },
+    "Craft 1 diamond pickaxe": "shared + Mine 3 iron_ore → Smelt 3 (iron_ingot) → iron_pickaxe (3 ingot+2 stick) → Mine 3 diamond → diamond pickaxe (3 diamond+2 stick). Sticks: 8−2−2−2−2=0.",
+    "Craft 1 golden sword": "shared through iron_pickaxe + Mine 2 gold_ore → Smelt 2 → golden sword (2 gold_ingot+1 stick). Smelts 5/8 coal. Sticks: 8−2−2−2−1=1 leftover.",
+    "Craft 1 compass": "shared through iron_pickaxe + Mine 4 iron_ore → Smelt 4 + Mine 1 redstone_ore → compass (4 iron_ingot+1 redstone). Smelts 7/8 coal. Sticks: 8−2−2−2=2 leftover.",
+    "Collect 1 lava bucket": "shared through furnace+fuel (no iron pickaxe) + Mine 3 iron_ore → Smelt 3 → bucket (3 iron_ingot) → Collect 1 lava_bucket. Sticks: 8−2−2=4 leftover."
+  },
+  "tasks": {
+    "Craft 1 diamond pickaxe": {
+      "target": "diamond_pickaxe",
+      "_comment": "See _derivation. Diamond ore needs iron pickaxe. 1.19 iron ore drops raw_iron.",
+      "subgoals": [
+        "Mine 3 log",
+        "Craft 12 planks",
+        "Craft 1 crafting_table",
+        "Craft 8 stick",
+        "Craft 1 wooden_pickaxe",
+        "Mine 11 cobblestone",
+        "Craft 1 stone_pickaxe",
+        "Craft 1 furnace",
+        "Mine 1 coal_ore",
+        "Mine 3 iron_ore",
+        "Smelt 3 iron_ore",
+        "Craft 1 iron_pickaxe",
+        "Mine 3 diamond",
+        "Craft 1 diamond pickaxe"
+      ]
+    },
+    "Craft 1 golden sword": {
+      "target": "golden_sword",
+      "_comment": "Gold ore requires iron pickaxe. See _derivation.",
+      "subgoals": [
+        "Mine 3 log",
+        "Craft 12 planks",
+        "Craft 1 crafting_table",
+        "Craft 8 stick",
+        "Craft 1 wooden_pickaxe",
+        "Mine 11 cobblestone",
+        "Craft 1 stone_pickaxe",
+        "Craft 1 furnace",
+        "Mine 1 coal_ore",
+        "Mine 3 iron_ore",
+        "Smelt 3 iron_ore",
+        "Craft 1 iron_pickaxe",
+        "Mine 2 gold_ore",
+        "Smelt 2 gold_ore",
+        "Craft 1 golden sword"
+      ]
+    },
+    "Craft 1 compass": {
+      "target": "compass",
+      "_comment": "Compass=4 iron ingots+1 redstone. Redstone ore requires iron pickaxe. See _derivation.",
+      "subgoals": [
+        "Mine 3 log",
+        "Craft 12 planks",
+        "Craft 1 crafting_table",
+        "Craft 8 stick",
+        "Craft 1 wooden_pickaxe",
+        "Mine 11 cobblestone",
+        "Craft 1 stone_pickaxe",
+        "Craft 1 furnace",
+        "Mine 1 coal_ore",
+        "Mine 3 iron_ore",
+        "Smelt 3 iron_ore",
+        "Craft 1 iron_pickaxe",
+        "Mine 4 iron_ore",
+        "Smelt 4 iron_ore",
+        "Mine 1 redstone_ore",
+        "Craft 1 compass"
+      ]
+    },
+    "Collect 1 lava bucket": {
+      "target": "lava_bucket",
+      "optional": true,
+      "_comment": "Bucket=3 iron ingots. No iron pickaxe. See _derivation.",
+      "subgoals": [
+        "Mine 3 log",
+        "Craft 12 planks",
+        "Craft 1 crafting_table",
+        "Craft 8 stick",
+        "Craft 1 wooden_pickaxe",
+        "Mine 11 cobblestone",
+        "Craft 1 stone_pickaxe",
+        "Craft 1 furnace",
+        "Mine 1 coal_ore",
+        "Mine 3 iron_ore",
+        "Smelt 3 iron_ore",
+        "Craft 1 bucket",
+        "Collect 1 lava bucket"
+      ]
+    }
+  }
+}

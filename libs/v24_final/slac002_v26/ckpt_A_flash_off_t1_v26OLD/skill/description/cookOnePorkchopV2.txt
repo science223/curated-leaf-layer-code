@@ -1,0 +1,3 @@
+async function cookOnePorkchop(bot) {
+    // The function cooks one porkchop by first checking if a cooked porkchop already exists, then ensuring a raw porkchop is available by hunting pigs if necessary. It locates or places a furnace nearby, then determines a fuel source by checking inventory for coal, charcoal, planks, or logs, mining coal ore or chopping a log and crafting planks if none is found. Finally, it smelts the raw porkchop using the chosen fuel and reports the total cooked porkchops.
+}

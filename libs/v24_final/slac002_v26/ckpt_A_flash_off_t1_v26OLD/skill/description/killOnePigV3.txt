@@ -1,0 +1,3 @@
+async function killOnePig(bot) {
+    // The function is about locating and killing a single pig. It first checks for a nearby pig within 32 blocks; if none is found, it explores in a random direction for up to 60 seconds until a pig appears. If still no pig is found, it stops. Once a pig is located, it attacks and kills the pig.
+}

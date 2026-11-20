@@ -1,0 +1,3 @@
+async function mineIronOre(bot) {
+    // The function ensures a suitable pickaxe (stone or better) is available before mining iron ore, stopping if none is found. It counts existing raw iron in the inventory and calculates how many more are needed to reach a target of three. If enough raw iron is already present, it exits early. Otherwise, it repeatedly searches for nearby iron ore within 32 blocks, exploring downward in random directions if none is found. It mines the required amount of iron ore, updating the count after each attempt, and stops after ten attempts or once the target is met.
+}

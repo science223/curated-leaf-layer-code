@@ -1,0 +1,3 @@
+async function mineOneDiamondOre(bot) {
+    // The function attempts to obtain at least one diamond by first checking if a diamond is already in the inventory and stopping if so. It then verifies the presence of an iron, diamond, or netherite pickaxe, aborting if none is available. If the inventory is nearly full, it drops junk items like cobblestone or dirt to free up at least two slots. It then searches for diamond ore within 32 blocks, exploring downward in random directions if none is found, and mines one ore block at a time. This process repeats up to 20 times until a diamond is collected, after which it reports the total diamond count.
+}

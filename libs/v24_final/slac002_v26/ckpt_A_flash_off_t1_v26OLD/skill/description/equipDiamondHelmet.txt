@@ -1,0 +1,3 @@
+async function equipDiamondHelmet(bot) {
+    // The function equips a diamond helmet from the inventory onto the bot's head. It first searches for a diamond helmet in the inventory and stops if none is found. It then checks whether a diamond helmet is already equipped in the head slot and stops if so. If a helmet is available and not already worn, it equips it to the head.
+}

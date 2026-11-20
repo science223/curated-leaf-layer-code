@@ -1,0 +1,3 @@
+async function mineDeepslateGoldOre(bot) {
+    // The function mines three deepslate gold ore blocks, requiring an iron, diamond, or netherite pickaxe in the inventory. It first checks for a suitable pickaxe and stops if none is found. It then frees inventory space by dropping junk blocks until at least three empty slots are available. It searches for deepslate gold ore within 32 blocks, exploring in random downward directions if none is nearby. It mines the ore until three raw gold have been collected, retrying up to 20 times. Finally, it reports the total raw gold in the inventory.
+}

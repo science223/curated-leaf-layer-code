@@ -1,0 +1,17 @@
+You are selecting existing skills for a Minecraft agent (Mineflayer / Voyager).
+
+Task:
+{task}
+
+Context:
+(none — this experiment does not provide rollout context; iterations.jsonl has no context field, and program_code is given 0 lines.)
+
+Existing skills (one per line, format: name(signature) — description):
+{skill_list}
+
+Select the existing skills that should be called directly to complete this task.
+If none of the listed skills are appropriate, output an empty array.
+
+Output JSON only, no markdown fences:
+{"skills": ["name1", "name2"], "reason": "brief reason"}
+Use exact skill names from the list. Do not invent names.
