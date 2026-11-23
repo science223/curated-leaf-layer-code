@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# E12 (预注册_E12_E9新世界复现_2026-10-06): run_e9_lineage.sh (peter/v30, 83bd7f8f) with plan, run dir, lineage id,
-# candidate prefix and log tags renamed e9 -> e12 (mk_run_e12.py); everything else line for line the same.
+# E13 (预注册_E13_E9新世界复现_2026-10-06): run_e9_lineage.sh (v30, 83bd7f8f) with plan, run dir, lineage id,
+# candidate prefix and log tags renamed e9 -> e13 (mk_run_e13.py); everything else line for line the same.
 # One E9 lineage (预注册_循环内完整生命周期_2026-09-29), v3 after Codex review 2. Variant V: n = Rule A without grants
 # (as E8), g = with grants (as E4). Lineage L = 1..3 plays the 15 jobs of plan zs_e9V_life_L in ~/wt_v30_e9, one at a
 # time, in the plan's order (the online arm's lineage order):
@@ -26,18 +26,18 @@ set -u
 V=$1; L=$2
 case $V in n|g) ;; *) echo "variant must be n or g"; exit 2 ;; esac
 case $L in 1|2|3) NG=15 ;; 9) NG=2 ;; *) echo "lineage must be 1, 2 or 3 (9 = the two-game smoke)"; exit 2 ;; esac
-R=${E9_REPO:-$HOME/wt_e12}
+R=${E9_REPO:-$HOME/wt_e13}
 PY=${E9_PY:-$HOME/Voyager_0911/venv/bin/python}
 T=$(cd "$(dirname "$0")" && pwd)
-PLAN=zs_e12${V}_life_L$L
-G=$R/runs_0911/e12${V}_life_L$L/_gov
+PLAN=zs_e13${V}_life_L$L
+G=$R/runs_0911/e13${V}_life_L$L/_gov
 OUT=$R/runs_0911/$PLAN
 mkdir -p "$G/pools" "$G/attempts" "$OUT"
-exec 9>"$G/e9.lock"; flock -n 9 || { echo "E12 $V L$L already running"; exit 3; }
-LOGF=${E9_LOG:-$HOME/e12_lineages.log}
+exec 9>"$G/e9.lock"; flock -n 9 || { echo "E13 $V L$L already running"; exit 3; }
+LOGF=${E9_LOG:-$HOME/e13_lineages.log}
 touch "$LOGF"
 POOL=$G/pool_e3.json; LEDGER=$G/ledger.json
-log() { echo "$(date '+%F %T') E12 $V L$L $*" >> "$LOGF"; }
+log() { echo "$(date '+%F %T') E13 $V L$L $*" >> "$LOGF"; }
 GW=$(ip route | awk '/default/ {print $3; exit}')
 PROXY=http://$GW:7897
 # v3.1 (10-02, slac002): E9_DIRECT=1 = the machine reaches the API directly; no proxy is checked, exported or set
@@ -48,14 +48,14 @@ if [ -z "${E9_SKIP_PRECHECK:-}" ]; then
     code=$(curl -s -m 20 -o /dev/null -w '%{http_code}' -x "$PROXY" https://api.deepseek.com/v1/models)
     case $code in 000|'') log "STOPPED: proxy $PROXY unreachable"; exit 2 ;; esac
   else
-    code=$(curl -s -m 20 -o /dev/null -w '%{http_code}' https://api.deepseek.com/v1/models)
-    case $code in 000|'') log "STOPPED: api.deepseek.com unreachable (direct)"; exit 2 ;; esac
+    # E13: the model is served by Ollama on this machine (E13_API_BASE, set by go_e13.sh)
+    curl -s -m 20 "${E13_API_BASE:?}/models" | grep -q '"qwen3.8:27b"' || { log "STOPPED: qwen3.8:27b not served at $E13_API_BASE"; exit 2; }
   fi
   om=$(md5sum < "$R/voyager/control_primitives_extra/obtain.js" | cut -c1-8)
   [ "$om" = b3f48363 ] || { log "STOPPED: obtain.js is $om, not b3f48363 (E7 v4)"; exit 2; }
 fi
 if [ -n "$PROXY" ]; then export ZS_EGRESS_PROXY=$PROXY V30_EGRESS_PROXY=$PROXY; else unset ZS_EGRESS_PROXY V30_EGRESS_PROXY; fi
-export GOV_LEDGER_FILE=$LEDGER GOV_LEDGER_LINEAGE_ID=e12${V}_L$L GOV_ALLOW_EMPTY_POOL=1
+export GOV_LEDGER_FILE=$LEDGER GOV_LEDGER_LINEAGE_ID=e13${V}_L$L GOV_ALLOW_EMPTY_POOL=1
 export GOV_QUIESCE_MS=1500 GOV_QUIESCE_CAP_MS=6000 GOV_LATE_FENCE=1 GOV_LEDGER_MODE=full GOV_RETIRE_MODE=quarantine GOV_FALLBACK=on
 unset GOV_RESUME GOV_LEDGER_LINEAGE
 state() { python3 "$T/e9_commit.py" state "$LEDGER" "$POOL"; }
@@ -75,9 +75,9 @@ play() {
 # the logged state after game m (m = 0: the start line) as "calls ledger_sha pool_sha", empty if not logged
 logged() {
   if [ "$1" -eq 0 ]; then
-    grep "E12 $V L$L start " "$LOGF" | tail -1 | sed -E 's/.* start ([0-9]+) ([0-9a-f]+) ([0-9a-f]+).*/\1 \2 \3/'
+    grep "E13 $V L$L start " "$LOGF" | tail -1 | sed -E 's/.* start ([0-9]+) ([0-9a-f]+) ([0-9a-f]+).*/\1 \2 \3/'
   else
-    grep "E12 $V L$L game $1 .* commit " "$LOGF" | tail -1 | sed -E 's/.* commit ledger_calls=([0-9]+) ledger_sha=([0-9a-f]+) pool_sha=([0-9a-f]+).*/\1 \2 \3/'
+    grep "E13 $V L$L game $1 .* commit " "$LOGF" | tail -1 | sed -E 's/.* commit ledger_calls=([0-9]+) ledger_sha=([0-9a-f]+) pool_sha=([0-9a-f]+).*/\1 \2 \3/'
   fi
 }
 commit_game() {  # commit_game <n> <tag> <expected_base_sha>
@@ -96,7 +96,7 @@ if [ -z "$(logged 0)" ]; then
   [ "$k" -eq 0 ] || { log "STOPPED: $k games DONE but the lineage never logged its start"; exit 6; }
   [ -e "$POOL" ] && [ "$(tr -d ' \n' < "$POOL")" != "{}" ] && { log "STOPPED: a fresh lineage must start from an empty pool"; exit 6; }
   echo '{}' > "$POOL"
-  echo "{\"lineage_id\": \"e12${V}_L$L\", \"entries\": {}}" > "$LEDGER"
+  echo "{\"lineage_id\": \"e13${V}_L$L\", \"entries\": {}}" > "$LEDGER"
   log "start $(state)"
 else
   [ -e "$POOL" ] && [ -e "$LEDGER" ] || { log "STOPPED: the pool or the ledger is missing"; exit 6; }
@@ -134,7 +134,7 @@ while read -r TAG MACH STATE; do
   cp "$POOL" "$G/pools/g$n.pre.json"
   rm -f "$G/grow_g$n.jsonl"
   grow --pool "$POOL" --ledger "$LEDGER" --log "$G/grow_g$n.jsonl" --lineage "$L" --scene "$SCENE" --game "$n" --world "$W" \
-    --prefix "gov_e12${V}L$L" >> "$G/grow.stdout" 2>&1 < /dev/null
+    --prefix "gov_e13${V}L$L" >> "$G/grow.stdout" 2>&1 < /dev/null
   rc=$?
   [ $rc -eq 0 ] || { log "game $n $TAG STOPPED: grow rc=$rc (2 = API failure)"; exit 9; }
   cp "$POOL" "$G/pools/g$n.json"

@@ -29,7 +29,7 @@ Comments written during the project are partly in Chinese.
 | The execution tournament (Algorithm 3) | `_cc0924/gov_tournament.py`, `_cc0924/gov_select.py` |
 | The harvested candidates (output of `gov_harvest.py`, the harness's default pool) | `_gov/candidates.json` |
 | The candidate pools of the isolated evaluation | `_gov/pool_screened.json` (Screened), `_gov/pool_random.json` (Random), `_gov/pool_system.json` (System), `_gov/pool_full.json` (all harvested candidates) |
-| Writing leaves on demand (Algorithm 4) and the series that grow the leaf layer | `experiments/leaf_writing/` (`gen_leaves.py`, `e9_grow.py`, `e9_commit.py`), with the series runners in `experiments/exp11_*` and `experiments/exp13_*` to `experiments/exp15_*` |
+| Writing leaves on demand (Algorithm 4) and the series that grow the leaf layer | `gen_leaves.py`, `e9_grow.py`, and `e9_commit.py` with the series runners in `experiments/exp11_*` and `experiments/exp13_*` to `experiments/exp15_*` (for example `experiments/exp13_lifecycle_heldout_worlds/`) |
 | The frozen pools of Experiment 17 | `_gov/pool_e15_e12_L*.json` (written by DeepSeek), `_gov/pool_e15_e13_L*.json` (written by Qwen3.8-27B) |
 | Isolated evaluation (hand / prim / gov leaves on fixed scenes, no language model) | `_cc0924/test_obtain_mc.py` (with `_cc0924/test_skills_mc.py`) |
 | In-loop experiments (plans `zs_ruleA_*`, `zs_e4_*`, `zs_e8_*`, `zs_e9*`, `zs_e10n_*`, `zs_e12*`, `zs_e13*`, `zs_e15_*`; named by the internal experiment numbers, which `docs/names.md` of the supplementary material maps to the paper's Experiments 1 to 17) | `_cc0911/launch_zs.py`, `_cc0911/launch_0911.py`, `_cc0911/ports_0911.json` |
