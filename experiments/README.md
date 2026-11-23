@@ -8,8 +8,9 @@ They are a record, not a ready-to-run pipeline:
   `~/V30_*` for the isolated harness, each a copy of this archive's code), and some scripts call Windows PowerShell
   from WSL;
 - several scripts check the md5 of the executor, the pool, or the launcher before they start, against the files of
-  their run tree. In this archive those md5s differ (see the next section), so such a check stops the script unless it
-  is overridden or removed;
+  their run tree. Some of the checked files have a different md5 in this archive (the harness, the loop runner, the
+  screened pool, and the launcher; see the next section), and a check on one of them stops the script unless it is
+  overridden or removed;
 - setup scripts call patch scripts that are not included, because the plans they produced are now in
   `_cc0911/launch_zs.py`;
 - `exp04_harsh_worlds/e11_night.sh` shuts down the whole WSL instance (`wsl.exe --terminate`) at a set time;
