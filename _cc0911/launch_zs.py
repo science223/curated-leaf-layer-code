@@ -398,6 +398,53 @@ PLANS = {
         zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
         v30_flags_for_lib_prefix={"SYS_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain"]},
     ),
+    # 2026-11-24: the plans of the paper's Experiments 10 (E10) and 17 (E15), copied verbatim from the launcher that
+    # ran E15 (md5 3e19c70f); E10's plans are identical in its own launcher (8e46d0c1).
+    # 10-06 E10 (预注册_E10_循环只用筛选叶子_2026-10-06): the loop with the screened pool alone (no innate candidates),
+    # Rule A without grants; SYS reference = the E9 SYS games; a three-game SYS drift check on this machine.
+    "zs_e10n_smoke": dict(
+        libs={"SCR_w1": LIBS_EXISTING_V41["OLD_w1"]}, tasks=TASKS_0925, trials=1, max_rounds=50,
+        cells=[(20260902010, "gs"), (20260902011, "cp")],
+        model=None, api_base=None, key_env="DEEPSEEK_API_KEY", providers="",
+        smoke=True, op_bot=True, lane_host="admin1", machine_weights={"admin1": 3}, lanes_only=[8, 9],
+        zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
+        v30_flags_for_lib_prefix={"SCR_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_screened.json"), "--gov-online"]},
+    ),
+    "zs_e10n_drift": dict(
+        libs={"SYS_w1": LIBS_EXISTING_V41["OLD_w1"]}, tasks=TASKS_0925, trials=1, max_rounds=50,
+        cells=[(20260902007, "dp"), (20260902009, "gs"), (20260902013, "cp")],
+        model=None, api_base=None, key_env="DEEPSEEK_API_KEY", providers="",
+        smoke=False, op_bot=True, lane_host="admin1", machine_weights={"admin1": 3}, lanes_only=[1, 2, 3],
+        zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
+        v30_flags_for_lib_prefix={"SYS_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain"]},
+    ),
+    "zs_e10n_scr": dict(
+        libs={"SCR_w1": LIBS_EXISTING_V41["OLD_w1"]}, tasks=TASKS_0925, trials=3, max_rounds=50,
+        cells=[(20260902007, "dp"), (20260902007, "gs"), (20260902007, "cp"), (20260902008, "dp"), (20260902008, "gs"), (20260902008, "cp"), (20260902009, "dp"), (20260902009, "gs"), (20260902009, "cp"), (20260902012, "dp"), (20260902012, "gs"), (20260902012, "cp"), (20260902013, "dp"), (20260902013, "gs"), (20260902013, "cp")],
+        model=None, api_base=None, key_env="DEEPSEEK_API_KEY", providers="",
+        smoke=False, op_bot=True, lane_host="admin1", machine_weights={"admin1": 3}, lanes_only=[1, 2, 3],
+        zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
+        v30_flags_for_lib_prefix={"SCR_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_screened.json"), "--gov-online"]},
+    ),
+    # 10-16 E15 (预注册_E15_DeepSeek调用小模型叶子_2026-10-16): DeepSeek's loop with the frozen final pool of an E13 (FQ)
+    # or E12 (FD) lineage, ledger restarted every game, Rule A without grants; SYS reference = the E12 SYS games.
+    "zs_e15_smoke": dict(
+        libs={"FQ1_w1": LIBS_EXISTING_V41["OLD_w1"], "FD1_w1": LIBS_EXISTING_V41["OLD_w1"]}, tasks=TASKS_0925, trials=1, max_rounds=50,
+        cells=[(20260902010, "gs")],
+        model=None, api_base=None, key_env="DEEPSEEK_API_KEY", providers="",
+        smoke=True, op_bot=True, lane_host="admin1", machine_weights={"admin1": 3}, lanes_only=[8, 9],
+        zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
+        v30_flags_for_lib_prefix={"FQ1_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e13_L1.json"), "--gov-online"], "FD1_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e12_L1.json"), "--gov-online"]},
+    ),
+    "zs_e15_main": dict(
+        libs={"FQ1_w1": LIBS_EXISTING_V41["OLD_w1"], "FD1_w1": LIBS_EXISTING_V41["OLD_w1"], "FQ2_w1": LIBS_EXISTING_V41["OLD_w1"], "FD2_w1": LIBS_EXISTING_V41["OLD_w1"], "FQ3_w1": LIBS_EXISTING_V41["OLD_w1"], "FD3_w1": LIBS_EXISTING_V41["OLD_w1"]}, tasks=TASKS_0925, trials=1, max_rounds=50,
+        cells=[(20260902169, "dp"), (20260902250, "gs"), (20260902342, "cp"), (20260902397, "dp"), (20260902474, "gs"), (20260902491, "cp"), (20260902546, "dp"), (20260902574, "gs"), (20260902593, "cp"), (20260902619, "dp"), (20260902630, "gs"), (20260902714, "cp"), (20260902781, "dp"), (20260902853, "gs"), (20260902937, "cp")],
+        model=None, api_base=None, key_env="DEEPSEEK_API_KEY", providers="",
+        smoke=False, op_bot=True, lane_host="admin1", machine_weights={"admin1": 3}, lanes_only=[1, 2, 3, 8],
+        include_smoke_lanes_on=("slac002",), parallel_by_machine={"slac002": 4},
+        zs_noise_flags=["--zs-place-judge", "--zs-count-judge", "--zs-canonical-subgoals", "--zs-fixed-start"],
+        v30_flags_for_lib_prefix={"FQ1_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e13_L1.json"), "--gov-online"], "FD1_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e12_L1.json"), "--gov-online"], "FQ2_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e13_L2.json"), "--gov-online"], "FD2_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e12_L2.json"), "--gov-online"], "FQ3_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e13_L3.json"), "--gov-online"], "FD3_": ["--v30-shared-fixes", "--v30-named-actions", "--extra-base-skills", "obtain", "--gov-pool", str(ROOT / "_gov" / "pool_e15_e12_L3.json"), "--gov-online"]},
+    ),
 }
 
 # 10-09 E13 (预注册_E13_换小模型复现_2026-10-09): the five E12 plans with the local Qwen3.8-27B served by Ollama on this

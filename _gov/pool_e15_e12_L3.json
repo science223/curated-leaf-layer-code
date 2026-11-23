@@ -1,0 +1,670 @@
+{
+ "log": [
+  {
+   "id": "gov_e12nL3_log_0",
+   "fn": "gov_e12nL3_log_0__mineWoodLogs",
+   "code": "async function gov_e12nL3_log_0__mineWoodLogs(bot) {\n  // List of common log block names\n  const logNames = [\"oak_log\", \"birch_log\", \"spruce_log\", \"jungle_log\", \"acacia_log\", \"dark_oak_log\"];\n\n  // Helper to find any nearby log\n  const findLog = () => {\n    return bot.findBlock({\n      matching: block => logNames.includes(block.name),\n      maxDistance: 32\n    });\n  };\n  let logBlock = findLog();\n  if (!logBlock) {\n    _govSafeChat(bot, \"No wood log nearby, exploring...\");\n    // Explore in a random horizontal direction to find a tree\n    const dirs = [new Vec3(1, 0, 0), new Vec3(-1, 0, 0), new Vec3(0, 0, 1), new Vec3(0, 0, -1), new Vec3(1, 0, 1), new Vec3(-1, 0, -1), new Vec3(1, 0, -1), new Vec3(-1, 0, 1)];\n    const direction = dirs[Math.floor(Math.random() * dirs.length)];\n    logBlock = await exploreUntil(bot, direction, 60, () => {\n      return findLog();\n    });if (globalThis.__govActive !== \"gov_e12nL3_log_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_log_0\") return;\n  if (!logBlock) {\n    _govSafeChat(bot, \"Could not find any wood log after exploring.\");\n    return;\n  }\n  const logName = logBlock.name;\n  _govSafeChat(bot, `Found ${logName}, mining 3 logs...`);\n  await mineBlock(bot, logName, 3);if (globalThis.__govActive !== \"gov_e12nL3_log_0\") return;\n  _govSafeChat(bot, \"Done mining wood logs.\");\n}",
+   "code_hash": "1ffdfc5dfaab8be95dbe539360f23bd32312bc1d08b76106b1abee01e8bc4ee9",
+   "norm_hash": "8f32e43b53d73b452b8d0703dbdd21bb8a1cb724169a156812941532d4666e30",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineWoodLogs",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "oak_log",
+    "birch_log",
+    "spruce_log",
+    "jungle_log",
+    "acacia_log",
+    "dark_oak_log"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineWoodLogs",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_log_1",
+   "fn": "gov_e12nL3_log_1__mineWoodLogs",
+   "code": "async function gov_e12nL3_log_1__mineWoodLogs(bot) {\n  const logNames = [\"oak_log\", \"birch_log\", \"spruce_log\", \"jungle_log\", \"acacia_log\", \"dark_oak_log\", \"mangrove_log\", \"cherry_log\"];\n  let collected = 0;\n  const targetCount = 3;\n\n  // Try up to 5 exploration attempts to find logs\n  for (let attempt = 0; attempt < 5 && collected < targetCount; attempt++) {if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n    // Check if there's already a log nearby\n    let logBlock = bot.findBlock({\n      matching: block => logNames.includes(block.name),\n      maxDistance: 32\n    });\n    if (!logBlock) {\n      _govSafeChat(bot, \"No logs nearby, exploring...\");\n      const directions = [new Vec3(1, 0, 0), new Vec3(-1, 0, 0), new Vec3(0, 0, 1), new Vec3(0, 0, -1), new Vec3(1, 0, 1), new Vec3(-1, 0, 1), new Vec3(1, 0, -1), new Vec3(-1, 0, -1)];\n      const dir = directions[Math.floor(Math.random() * directions.length)];\n      logBlock = await exploreUntil(bot, dir, 60, () => {\n        return bot.findBlock({\n          matching: block => logNames.includes(block.name),\n          maxDistance: 32\n        });\n      });if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n    }if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n    if (!logBlock) {\n      _govSafeChat(bot, \"Could not find any logs after exploring.\");\n      continue;\n    }\n    const logName = logBlock.name;\n    const remaining = targetCount - collected;\n    _govSafeChat(bot, `Found ${logName}, mining ${remaining} more...`);\n    try {\n      await mineBlock(bot, logName, remaining);if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n    } catch (err) {\n      _govSafeChat(bot, `Error mining ${logName}: ${err.message}`);\n    }if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n\n    // Count how many logs we now have\n    collected = bot.inventory.items().filter(item => logNames.includes(item.name)).reduce((sum, item) => sum + item.count, 0);\n  }if (globalThis.__govActive !== \"gov_e12nL3_log_1\") return;\n  _govSafeChat(bot, `Finished mining wood logs. Total logs: ${collected}`);\n}",
+   "code_hash": "2ad1f832509bbd2b60739b557b977a5c50b792bb68c883d089a13dedb8dd911a",
+   "norm_hash": "9bb2cfba0b20781456c05a3d109d8ef90d4dbe6b1b22c4422caf2fccb02ca108",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineWoodLogs",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "oak_log",
+    "birch_log",
+    "spruce_log",
+    "jungle_log",
+    "acacia_log",
+    "dark_oak_log",
+    "mangrove_log",
+    "cherry_log"
+   ],
+   "normalized": [
+    "abort_probes:6",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:6",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineWoodLogs",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "cobblestone": [
+  {
+   "id": "gov_e12nL3_cobblestone_0",
+   "fn": "gov_e12nL3_cobblestone_0__mineCobblestone",
+   "code": "async function gov_e12nL3_cobblestone_0__mineCobblestone(bot) {\n  _govSafeChat(bot, \"Starting to mine 3 cobblestone.\");\n\n  // Check current cobblestone count.\n  const countCobblestone = () => {\n    const item = bot.inventory.items().find(i => i.name === \"cobblestone\");\n    return item ? item.count : 0;\n  };\n\n  // Try mining stone (drops cobblestone) up to 3.\n  await mineBlock(bot, \"stone\", 3);if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_0\") return;\n\n  // If not enough, explore downward to find stone.\n  if (countCobblestone() < 3) {\n    _govSafeChat(bot, \"Not enough cobblestone, exploring downward for stone.\");\n    await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n      const stone = bot.findBlock({\n        matching: mcData.blocksByName[\"stone\"].id,\n        maxDistance: 32\n      });\n      return stone;\n    });if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_0\") return;\n    await mineBlock(bot, \"stone\", 3 - countCobblestone());if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_0\") return;\n  const finalCount = countCobblestone();\n  if (finalCount >= 3) {\n    _govSafeChat(bot, `Successfully mined cobblestone. Now have ${finalCount}.`);\n  } else {\n    _govSafeChat(bot, `Only have ${finalCount} cobblestone, task may be incomplete.`);\n  }\n}",
+   "code_hash": "bd56339cdb7bf8fa648ceba393c08cc6545f82ef3b98e1b02ab935dde8a96edb",
+   "norm_hash": "1c653652a65e25ee2bf43f8189a4076981059adb6e7c51c7a967c072f0136921",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineCobblestone",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "stone",
+    "id"
+   ],
+   "normalized": [
+    "abort_probes:4",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:4",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineCobblestone",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_cobblestone_1",
+   "fn": "gov_e12nL3_cobblestone_1__mineCobblestone",
+   "code": "async function gov_e12nL3_cobblestone_1__mineCobblestone(bot) {\n  // Cobblestone is obtained by mining stone blocks.\n  // Check for a pickaxe in inventory first.\n  const pickaxe = bot.inventory.findInventoryItem(mcData.itemsByName[\"wooden_pickaxe\"].id) || bot.inventory.findInventoryItem(mcData.itemsByName[\"stone_pickaxe\"].id) || bot.inventory.findInventoryItem(mcData.itemsByName[\"iron_pickaxe\"].id) || bot.inventory.findInventoryItem(mcData.itemsByName[\"diamond_pickaxe\"].id);\n  if (!pickaxe) {\n    _govSafeChat(bot, \"No pickaxe found, cannot mine stone.\");\n    return;\n  }\n\n  // Count current cobblestone in inventory.\n  const countCobblestone = () => {\n    const item = bot.inventory.findInventoryItem(mcData.itemsByName[\"cobblestone\"].id);\n    return item ? item.count : 0;\n  };\n  let needed = 3 - countCobblestone();\n  if (needed <= 0) {\n    _govSafeChat(bot, \"Already have enough cobblestone.\");\n    return;\n  }\n  _govSafeChat(bot, `Need ${needed} more cobblestone. Looking for stone...`);\n\n  // Try to find stone nearby. If not found, explore downward (stone is underground).\n  let stone = bot.findBlock({\n    matching: mcData.blocksByName[\"stone\"].id,\n    maxDistance: 32\n  });\n  if (!stone) {\n    _govSafeChat(bot, \"No stone nearby, exploring downward...\");\n    const directions = [new Vec3(0, -1, 0), new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1)];\n    const dir = directions[Math.floor(Math.random() * directions.length)];\n    await exploreUntil(bot, dir, 60, () => {\n      return bot.findBlock({\n        matching: mcData.blocksByName[\"stone\"].id,\n        maxDistance: 32\n      });\n    });if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_1\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_1\") return;\n\n  // Mine stone (drops cobblestone).\n  await mineBlock(bot, \"stone\", needed);if (globalThis.__govActive !== \"gov_e12nL3_cobblestone_1\") return;\n  const finalCount = countCobblestone();\n  _govSafeChat(bot, `Mined cobblestone. Now have ${finalCount} cobblestone.`);\n}",
+   "code_hash": "88ab947f6cbd2b92933e21b91353e28160dad863c1dc7f1a43be783c1799405d",
+   "norm_hash": "bfbdd0ad7cf5e3f2a6643a0b71e2cfb4280ca95a6a2e00874618cc3170673e10",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineCobblestone",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "stone"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineCobblestone",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "coal": [
+  {
+   "id": "gov_e12nL3_coal_0",
+   "fn": "gov_e12nL3_coal_0__mineCoalOre",
+   "code": "async function gov_e12nL3_coal_0__mineCoalOre(bot) {\n  _govSafeChat(bot, \"Searching for coal ore...\");\n\n  // Check if coal ore is already nearby\n  let coalOre = bot.findBlock({\n    matching: mcData.blocksByName[\"coal_ore\"].id,\n    maxDistance: 32\n  });\n\n  // If not found nearby, explore downward to find coal ore\n  if (!coalOre) {\n    _govSafeChat(bot, \"No coal ore nearby, exploring underground...\");\n    coalOre = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n      const found = bot.findBlock({\n        matching: mcData.blocksByName[\"coal_ore\"].id,\n        maxDistance: 32\n      });\n      return found;\n    });if (globalThis.__govActive !== \"gov_e12nL3_coal_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_coal_0\") return;\n  if (!coalOre) {\n    _govSafeChat(bot, \"Could not find any coal ore.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found coal ore, mining 3...\");\n  await mineBlock(bot, \"coal_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_coal_0\") return;\n  _govSafeChat(bot, \"Mined 3 coal ore.\");\n}",
+   "code_hash": "3b8533cfab0256da9385c34233750ab62011bfda0ee01821bf906919357a3ce5",
+   "norm_hash": "0a7e996fb9dcf8501ced926a8ed3a0dd307d81845f8ff24f746d1b9d3d7ca34e",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineCoalOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "coal_ore"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineCoalOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_coal_1",
+   "fn": "gov_e12nL3_coal_1__mineCoalOre",
+   "code": "async function gov_e12nL3_coal_1__mineCoalOre(bot) {\n  _govSafeChat(bot, \"Searching for coal ore...\");\n\n  // Try to find coal ore nearby first\n  let coalOre = bot.findBlock({\n    matching: mcData.blocksByName[\"coal_ore\"].id,\n    maxDistance: 32\n  });\n\n  // If not found, explore downward to locate coal ore\n  if (!coalOre) {\n    _govSafeChat(bot, \"No coal ore nearby, exploring underground...\");\n    const found = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n      const block = bot.findBlock({\n        matching: mcData.blocksByName[\"coal_ore\"].id,\n        maxDistance: 32\n      });\n      return block;\n    });if (globalThis.__govActive !== \"gov_e12nL3_coal_1\") return;\n    if (!found) {\n      _govSafeChat(bot, \"Could not find any coal ore after exploring.\");\n      return;\n    }\n    coalOre = found;\n  }if (globalThis.__govActive !== \"gov_e12nL3_coal_1\") return;\n  _govSafeChat(bot, \"Found coal ore, mining 3...\");\n  await mineBlock(bot, \"coal_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_coal_1\") return;\n  _govSafeChat(bot, \"Done mining coal ore.\");\n}",
+   "code_hash": "d0cd53f10fbf1dff1ec686cf05308af87e899e852d4cc3af1e048c45b0645b4f",
+   "norm_hash": "e617e58fe6753c2fb5666ed1ef650de44acad5918207676067943c2ad8b5cf46",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineCoalOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "coal_ore"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineCoalOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "raw_iron": [
+  {
+   "id": "gov_e12nL3_raw_iron_0",
+   "fn": "gov_e12nL3_raw_iron_0__mineIronOre",
+   "code": "async function gov_e12nL3_raw_iron_0__mineIronOre(bot) {\n  _govSafeChat(bot, \"Looking for iron ore...\");\n  let ironOre = bot.findBlock({\n    matching: mcData.blocksByName[\"iron_ore\"].id,\n    maxDistance: 32\n  });\n  if (!ironOre) {\n    const directions = [new Vec3(0, -1, 0), new Vec3(1, -1, 1), new Vec3(-1, -1, -1), new Vec3(1, -1, 0), new Vec3(0, -1, 1)];\n    const direction = directions[Math.floor(Math.random() * directions.length)];\n    ironOre = await exploreUntil(bot, direction, 60, () => {\n      const ore = bot.findBlock({\n        matching: mcData.blocksByName[\"iron_ore\"].id,\n        maxDistance: 32\n      });\n      return ore;\n    });if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_0\") return;\n  if (!ironOre) {\n    _govSafeChat(bot, \"Could not find any iron ore.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found iron ore, mining 3...\");\n  await mineBlock(bot, \"iron_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_0\") return;\n  _govSafeChat(bot, \"Done mining iron ore.\");\n}",
+   "code_hash": "f932d22cd1392d1f8a09a4d9347a243e1b3615075112b34fcbaa15a08840082e",
+   "norm_hash": "2ec0ca07a676e8b67d291fda6c3165c8cf2a592dbcd0472db43d652bc33ee730",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineIronOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "iron_ore"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineIronOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_raw_iron_1",
+   "fn": "gov_e12nL3_raw_iron_1__mineIronOre",
+   "code": "async function gov_e12nL3_raw_iron_1__mineIronOre(bot) {\n  // Ensure we have a pickaxe that can mine iron ore (stone or better)\n  const pickaxeNames = [\"stone_pickaxe\", \"iron_pickaxe\", \"diamond_pickaxe\", \"netherite_pickaxe\"];\n  let pickaxe = null;\n  for (const name of pickaxeNames) {if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    const item = bot.inventory.findInventoryItem(mcData.itemsByName[name].id);\n    if (item) {\n      pickaxe = item;\n      break;\n    }\n  }\n  if (!pickaxe) {\n    _govSafeChat(bot, \"No suitable pickaxe, crafting a stone pickaxe.\");\n    // Need a wooden pickaxe first if we don't have one, but we have stone_pickaxe per inventory.\n    // As a fallback, mine cobblestone and craft stone_pickaxe.\n    const cobbleCount = bot.inventory.count(mcData.itemsByName[\"cobblestone\"].id, null);\n    if (cobbleCount < 3) {\n      await mineBlock(bot, \"stone\", 3 - cobbleCount);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    // Need sticks for the pickaxe; craft from planks/logs\n    let stickCount = bot.inventory.count(mcData.itemsByName[\"stick\"].id, null);\n    if (stickCount < 2) {\n      let plankCount = bot.inventory.count(mcData.itemsByName[\"oak_planks\"].id, null);\n      if (plankCount < 2) {\n        // mine a log\n        await mineBlock(bot, \"oak_log\", 1);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n        await craftItem(bot, \"oak_planks\", 1);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n      }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n      await craftItem(bot, \"stick\", 1);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    await craftItem(bot, \"stone_pickaxe\", 1);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    pickaxe = bot.inventory.findInventoryItem(mcData.itemsByName[\"stone_pickaxe\"].id);\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n\n  // Explore downward to find iron ore\n  let ironCount = bot.inventory.count(mcData.itemsByName[\"raw_iron\"].id, null);\n  let attempts = 0;\n  while (ironCount < 3 && attempts < 5) {if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    const found = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n      const iron = bot.findBlock({\n        matching: mcData.blocksByName[\"iron_ore\"].id,\n        maxDistance: 32\n      });\n      return iron;\n    });if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    if (found) {\n      _govSafeChat(bot, \"Found iron ore, mining 3.\");\n      await mineBlock(bot, \"iron_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    } else {\n      _govSafeChat(bot, \"No iron ore found in this exploration, trying again.\");\n    }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n    ironCount = bot.inventory.count(mcData.itemsByName[\"raw_iron\"].id, null);\n    attempts++;\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_iron_1\") return;\n  if (ironCount >= 3) {\n    _govSafeChat(bot, `Mined ${ironCount} iron ore successfully.`);\n  } else {\n    _govSafeChat(bot, `Only mined ${ironCount} iron ore.`);\n  }\n}",
+   "code_hash": "baabc2c77bb34264e3f929b118a85632551445e58aa548782f07e5b547bc47f4",
+   "norm_hash": "0e7e03cb5cbc05501535e31a130a16f9434b81e4467ac4f0921144bb35b6a441",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineIronOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "stone",
+    "oak_log",
+    "id",
+    "iron_ore"
+   ],
+   "normalized": [
+    "abort_probes:15",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:15",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineIronOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "redstone": [
+  {
+   "id": "gov_e12nL3_redstone_0",
+   "fn": "gov_e12nL3_redstone_0__mineRedstoneOre",
+   "code": "async function gov_e12nL3_redstone_0__mineRedstoneOre(bot) {\n  _govSafeChat(bot, \"Searching for redstone ore...\");\n\n  // Try to find redstone ore by exploring downward\n  let found = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n    const redstone = bot.findBlock({\n      matching: mcData.blocksByName[\"redstone_ore\"].id,\n      maxDistance: 32\n    });\n    return redstone;\n  });if (globalThis.__govActive !== \"gov_e12nL3_redstone_0\") return;\n\n  // If not found, try exploring in random horizontal directions (still downward-biased)\n  let attempts = 0;\n  while (!found && attempts < 5) {if (globalThis.__govActive !== \"gov_e12nL3_redstone_0\") return;\n    const dirs = [new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1), new Vec3(1, -1, 1)];\n    const dir = dirs[Math.floor(Math.random() * dirs.length)];\n    found = await exploreUntil(bot, dir, 60, () => {\n      const redstone = bot.findBlock({\n        matching: mcData.blocksByName[\"redstone_ore\"].id,\n        maxDistance: 32\n      });\n      return redstone;\n    });if (globalThis.__govActive !== \"gov_e12nL3_redstone_0\") return;\n    attempts++;\n  }if (globalThis.__govActive !== \"gov_e12nL3_redstone_0\") return;\n  if (!found) {\n    _govSafeChat(bot, \"Could not find redstone ore after exploring.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found redstone ore, mining 3...\");\n  await mineBlock(bot, \"redstone_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_redstone_0\") return;\n  _govSafeChat(bot, \"Done mining redstone ore.\");\n}",
+   "code_hash": "8813625dbc4e4a72f7be2c50c4f478e4e8e3dc68d9993c2886f84efca3fb5336",
+   "norm_hash": "379de67ce735547e6e8024324a380f1ae1f5e414beef588a74364fe7b79fff6f",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineRedstoneOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "redstone_ore"
+   ],
+   "normalized": [
+    "abort_probes:5",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:5",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineRedstoneOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_redstone_1",
+   "fn": "gov_e12nL3_redstone_1__mineRedstoneOre",
+   "code": "async function gov_e12nL3_redstone_1__mineRedstoneOre(bot) {\n  // Check if we already have enough redstone\n  const redstoneItem = mcData.itemsByName[\"redstone\"];\n  const currentRedstone = bot.inventory.items().filter(item => item.type === redstoneItem.id).reduce((total, item) => total + item.count, 0);\n  if (currentRedstone >= 3) {\n    _govSafeChat(bot, `Already have ${currentRedstone} redstone, task complete.`);\n    return;\n  }\n  _govSafeChat(bot, \"Searching for redstone ore underground...\");\n\n  // Explore downward to find redstone ore\n  const found = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n    const redstoneOre = bot.findBlock({\n      matching: mcData.blocksByName[\"redstone_ore\"].id,\n      maxDistance: 32\n    });\n    return redstoneOre;\n  });if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n  if (!found) {\n    // Try exploring in a random horizontal direction as well\n    const directions = [new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1)];\n    const dir = directions[Math.floor(Math.random() * directions.length)];\n    _govSafeChat(bot, \"Still searching for redstone ore...\");\n    await exploreUntil(bot, dir, 60, () => {\n      const redstoneOre = bot.findBlock({\n        matching: mcData.blocksByName[\"redstone_ore\"].id,\n        maxDistance: 32\n      });\n      return redstoneOre;\n    });if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n\n  // Mine 3 redstone ore\n  _govSafeChat(bot, \"Mining redstone ore...\");\n  let mined = currentRedstone;\n  let attempts = 0;\n  while (mined < 3 && attempts < 5) {if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n    const oreBlock = bot.findBlock({\n      matching: mcData.blocksByName[\"redstone_ore\"].id,\n      maxDistance: 32\n    });\n    if (!oreBlock) {\n      // explore to find more\n      const dir = new Vec3(Math.floor(Math.random() * 3) - 1, -1, Math.floor(Math.random() * 3) - 1);\n      await exploreUntil(bot, dir, 30, () => {\n        return bot.findBlock({\n          matching: mcData.blocksByName[\"redstone_ore\"].id,\n          maxDistance: 32\n        });\n      });if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n      attempts++;\n      continue;\n    }if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n    await mineBlock(bot, \"redstone_ore\", 3 - mined);if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n    const newRedstone = bot.inventory.items().filter(item => item.type === redstoneItem.id).reduce((total, item) => total + item.count, 0);\n    if (newRedstone <= mined) {\n      attempts++;\n    }\n    mined = newRedstone;\n  }if (globalThis.__govActive !== \"gov_e12nL3_redstone_1\") return;\n  _govSafeChat(bot, `Done. Have ${mined} redstone.`);\n}",
+   "code_hash": "c832a8d132f472844e917ab3bfcecd024e12dd5b9e6c3736fcfb2636ee45342e",
+   "norm_hash": "59a46cd49dfb035ea4341174236ae55355ee2b7bab2d1c9e85e47f5bf2b99fed",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineRedstoneOre",
+   "round": 1,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "redstone_ore"
+   ],
+   "normalized": [
+    "abort_probes:8",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:8",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineRedstoneOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "diamond": [
+  {
+   "id": "gov_e12nL3_diamond_0",
+   "fn": "gov_e12nL3_diamond_0__mineDiamondOre",
+   "code": "async function gov_e12nL3_diamond_0__mineDiamondOre(bot) {\n  // Explore downward to find diamond ore (diamonds are deep underground)\n  let diamondOre = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n    const ore = bot.findBlock({\n      matching: mcData.blocksByName[\"diamond_ore\"].id,\n      maxDistance: 32\n    });\n    return ore;\n  });if (globalThis.__govActive !== \"gov_e12nL3_diamond_0\") return;\n  if (!diamondOre) {\n    // Try exploring in a random horizontal direction combined with downward\n    const directions = [new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1)];\n    const dir = directions[Math.floor(Math.random() * directions.length)];\n    diamondOre = await exploreUntil(bot, dir, 60, () => {\n      const ore = bot.findBlock({\n        matching: mcData.blocksByName[\"diamond_ore\"].id,\n        maxDistance: 32\n      });\n      return ore;\n    });if (globalThis.__govActive !== \"gov_e12nL3_diamond_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_diamond_0\") return;\n  if (!diamondOre) {\n    _govSafeChat(bot, \"Could not find diamond ore nearby.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found diamond ore, mining 3 now.\");\n  await mineBlock(bot, \"diamond_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_diamond_0\") return;\n  _govSafeChat(bot, \"Mined diamond ore.\");\n}",
+   "code_hash": "8c39aaecc1fc09d7ec6897f3c579e5c9a747726511ba3426500e4c16d2620d69",
+   "norm_hash": "ee303dfb74a3c35947ece01f63f4536eb3633724ab52401aaa4c98b614d49381",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineDiamondOre",
+   "round": 3,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "diamond_ore"
+   ],
+   "normalized": [
+    "exploreUntil_maxTime_capped:120",
+    "exploreUntil_maxTime_capped:120",
+    "abort_probes:4",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:4",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineDiamondOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_diamond_1",
+   "fn": "gov_e12nL3_diamond_1__mineDiamondOre",
+   "code": "async function gov_e12nL3_diamond_1__mineDiamondOre(bot) {\n  _govSafeChat(bot, \"Starting to search for diamond ore...\");\n\n  // Check if diamond ore is already nearby\n  let diamondOre = bot.findBlock({\n    matching: mcData.blocksByName[\"diamond_ore\"].id,\n    maxDistance: 32\n  });\n  if (!diamondOre) {\n    _govSafeChat(bot, \"No diamond ore nearby, exploring underground...\");\n    // Explore downward to find diamond ore (diamonds spawn deep underground)\n    diamondOre = await exploreUntil(bot, new Vec3(0, -1, 0), 60, () => {\n      const ore = bot.findBlock({\n        matching: mcData.blocksByName[\"diamond_ore\"].id,\n        maxDistance: 32\n      });\n      return ore;\n    });if (globalThis.__govActive !== \"gov_e12nL3_diamond_1\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_diamond_1\") return;\n  if (!diamondOre) {\n    _govSafeChat(bot, \"Could not find diamond ore after exploring.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found diamond ore, mining 3 blocks...\");\n  await mineBlock(bot, \"diamond_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_diamond_1\") return;\n  const diamondCount = bot.inventory.items().filter(item => item.name === \"diamond\").reduce((total, item) => total + item.count, 0);\n  _govSafeChat(bot, `Mining complete. Have ${diamondCount} diamond(s).`);\n}",
+   "code_hash": "2e9d876313d96116238b529c5d968e345492bb313c0733494554d544e89ca5fa",
+   "norm_hash": "a3b6c6741ef38b598faca12549cbf8112f828e62cae3be6b78a050c218a1046c",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineDiamondOre",
+   "round": 3,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "id",
+    "diamond_ore"
+   ],
+   "normalized": [
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:3",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineDiamondOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_diamond_2",
+   "fn": "gov_e12nL3_diamond_2__mineDiamondOre",
+   "code": "async function gov_e12nL3_diamond_2__mineDiamondOre(bot) {\n  // Ensure we have a pickaxe capable of mining diamond (iron or better)\n  const pickaxeNames = [\"iron_pickaxe\", \"diamond_pickaxe\", \"netherite_pickaxe\"];\n  let pickaxe = null;\n  for (const name of pickaxeNames) {if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n    const item = bot.inventory.findInventoryItem(mcData.itemsByName[name].id);\n    if (item) {\n      pickaxe = item;\n      break;\n    }\n  }\n  if (!pickaxe) {\n    _govSafeChat(bot, \"No suitable pickaxe to mine diamond ore.\");\n    return;\n  }\n  const diamondOreId = mcData.blocksByName[\"diamond_ore\"].id;\n  const deepslateDiamondOreId = mcData.blocksByName[\"deepslate_diamond_ore\"].id;\n  let mined = 0;\n  const targetCount = 3;\n  while (mined < targetCount) {if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n    // Look for diamond ore nearby\n    let diamondBlock = bot.findBlock({\n      matching: block => block.name === \"diamond_ore\" || block.name === \"deepslate_diamond_ore\",\n      maxDistance: 32\n    });\n    if (!diamondBlock) {\n      // Explore downward to reach diamond levels and find diamond ore\n      _govSafeChat(bot, \"Exploring for diamond ore...\");\n      const direction = new Vec3(0, -1, 0);\n      const found = await exploreUntil(bot, direction, 60, () => {\n        return bot.findBlock({\n          matching: block => block.name === \"diamond_ore\" || block.name === \"deepslate_diamond_ore\",\n          maxDistance: 32\n        });\n      });if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n      if (!found) {\n        _govSafeChat(bot, \"Could not find diamond ore after exploring.\");\n        return;\n      }\n      diamondBlock = found;\n    }if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n\n    // Mine the found diamond ore block(s)\n    _govSafeChat(bot, \"Found diamond ore, mining...\");\n    const remaining = targetCount - mined;\n    await mineBlock(bot, diamondBlock.name, remaining);if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n\n    // Count how many diamond ore we now have\n    const diamondItem = mcData.itemsByName[\"diamond\"];\n    let diamondCount = 0;\n    if (diamondItem) {\n      diamondCount = bot.inventory.items().filter(it => it.type === diamondItem.id).reduce((sum, it) => sum + it.count, 0);\n    }\n    // Diamond ore drops diamond items; count diamond items collected\n    mined = diamondCount;\n    _govSafeChat(bot, `Collected ${mined} diamond(s) so far.`);\n    if (mined >= targetCount) break;\n\n    // If we still need more, explore again\n    if (mined < targetCount) {\n      _govSafeChat(bot, \"Need more diamonds, exploring further...\");\n      const direction = new Vec3(0, -1, 0);\n      const found = await exploreUntil(bot, direction, 60, () => {\n        return bot.findBlock({\n          matching: block => block.name === \"diamond_ore\" || block.name === \"deepslate_diamond_ore\",\n          maxDistance: 32\n        });\n      });if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n      if (!found) {\n        _govSafeChat(bot, \"Could not find more diamond ore.\");\n        return;\n      }\n      await mineBlock(bot, found.name, targetCount - mined);if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n      const newCount = bot.inventory.items().filter(it => it.type === diamondItem.id).reduce((sum, it) => sum + it.count, 0);\n      mined = newCount;\n    }if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_diamond_2\") return;\n  _govSafeChat(bot, `Done mining diamond ore. Total diamonds: ${mined}`);\n}",
+   "code_hash": "7899ac61b14dedf4d6e624fcb9e1f87ce92758ec5e8dbf6777c8e8f42e2f0ba9",
+   "norm_hash": "27ede5b5ad03e04a98a9abdfa4517b24dc50e5360cc5eb735180b611b2bf5b11",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineDiamondOre",
+   "round": 3,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "diamond_ore",
+    "deepslate_diamond_ore",
+    "name"
+   ],
+   "normalized": [
+    "abort_probes:9",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:9",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineDiamondOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ],
+ "raw_gold": [
+  {
+   "id": "gov_e12nL3_raw_gold_0",
+   "fn": "gov_e12nL3_raw_gold_0__mineGoldOre",
+   "code": "async function gov_e12nL3_raw_gold_0__mineGoldOre(bot) {\n  const goldOreId = mcData.blocksByName[\"gold_ore\"].id;\n  const deepslateGoldOreId = mcData.blocksByName[\"deepslate_gold_ore\"].id;\n  const findGoldOre = () => {\n    return bot.findBlock({\n      matching: block => block && (block.type === goldOreId || block.type === deepslateGoldOreId),\n      maxDistance: 32\n    });\n  };\n  let goldOre = findGoldOre();\n\n  // Try exploring downward a few times if not found\n  let attempts = 0;\n  while (!goldOre && attempts < 4) {if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n    const dirs = [new Vec3(0, -1, 0), new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1)];\n    const direction = dirs[Math.floor(Math.random() * dirs.length)];\n    _govSafeChat(bot, `Exploring for gold ore (attempt ${attempts + 1})...`);\n    goldOre = await exploreUntil(bot, direction, 60, () => {\n      return findGoldOre();\n    });if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n    attempts++;\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n  if (!goldOre) {\n    _govSafeChat(bot, \"Could not find any gold ore nearby.\");\n    return;\n  }\n  _govSafeChat(bot, \"Found gold ore, mining 3...\");\n  await mineBlock(bot, \"gold_ore\", 3);if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n\n  // If we didn't get 3, try deepslate gold ore as well\n  const rawGoldCount = bot.inventory.items().filter(i => i.name === \"raw_gold\").reduce((sum, i) => sum + i.count, 0);\n  if (rawGoldCount < 3) {\n    _govSafeChat(bot, \"Mining deepslate gold ore to reach 3...\");\n    await mineBlock(bot, \"deepslate_gold_ore\", 3 - rawGoldCount);if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_0\") return;\n  const finalCount = bot.inventory.items().filter(i => i.name === \"raw_gold\").reduce((sum, i) => sum + i.count, 0);\n  _govSafeChat(bot, `Done. Have ${finalCount} raw gold.`);\n}",
+   "code_hash": "7662cd8ce83fa4b36c713d24163b029b5ba5b46abe195d4a02f0605e7f5de9a2",
+   "norm_hash": "cf5b3957e2450eb370211237f4614260f292c7c3d8d8032682dd6bdfe1e47028",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineGoldOre",
+   "round": 5,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "gold_ore",
+    "deepslate_gold_ore"
+   ],
+   "normalized": [
+    "abort_probes:6",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:6",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineGoldOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  },
+  {
+   "id": "gov_e12nL3_raw_gold_1",
+   "fn": "gov_e12nL3_raw_gold_1__mineGoldOre",
+   "code": "async function gov_e12nL3_raw_gold_1__mineGoldOre(bot) {\n  // Ensure we have a pickaxe that can mine gold ore (stone tier or better)\n  const pickaxe = bot.inventory.items().find(item => [\"wooden_pickaxe\", \"stone_pickaxe\", \"iron_pickaxe\", \"golden_pickaxe\", \"diamond_pickaxe\", \"netherite_pickaxe\"].includes(item.name));\n  if (!pickaxe) {\n    _govSafeChat(bot, \"No suitable pickaxe found, cannot mine gold ore.\");\n    return;\n  }\n  const goldOreId = mcData.blocksByName[\"gold_ore\"].id;\n  const deepslateGoldOreId = mcData.blocksByName[\"deepslate_gold_ore\"].id;\n  let collected = 0;\n  const targetCount = 3;\n  const directions = [new Vec3(0, -1, 0), new Vec3(1, -1, 0), new Vec3(-1, -1, 0), new Vec3(0, -1, 1), new Vec3(0, -1, -1)];\n  for (let attempt = 0; attempt < 6 && collected < targetCount; attempt++) {if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_1\") return;\n    // Check if gold ore is already nearby\n    let goldOre = bot.findBlock({\n      matching: block => block.name === \"gold_ore\" || block.name === \"deepslate_gold_ore\",\n      maxDistance: 32\n    });\n    if (!goldOre) {\n      _govSafeChat(bot, \"No gold ore nearby, exploring...\");\n      const direction = directions[attempt % directions.length];\n      await exploreUntil(bot, direction, 60, () => {\n        const ore = bot.findBlock({\n          matching: block => block.name === \"gold_ore\" || block.name === \"deepslate_gold_ore\",\n          maxDistance: 32\n        });\n        return ore;\n      });if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_1\") return;\n      goldOre = bot.findBlock({\n        matching: block => block.name === \"gold_ore\" || block.name === \"deepslate_gold_ore\",\n        maxDistance: 32\n      });\n    }if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_1\") return;\n    if (!goldOre) {\n      _govSafeChat(bot, \"Still no gold ore found after exploring.\");\n      continue;\n    }\n    _govSafeChat(bot, \"Found gold ore, mining...\");\n    const remaining = targetCount - collected;\n    await mineBlock(bot, \"gold_ore\", remaining);if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_1\") return;\n    // Also try deepslate variant in case the nearby ore is deepslate\n    const goldCount = bot.inventory.items().filter(item => item.name === \"raw_gold\").reduce((sum, item) => sum + item.count, 0);\n    collected = goldCount;\n    _govSafeChat(bot, `Collected ${collected}/${targetCount} raw gold so far.`);\n  }if (globalThis.__govActive !== \"gov_e12nL3_raw_gold_1\") return;\n  const finalCount = bot.inventory.items().filter(item => item.name === \"raw_gold\").reduce((sum, item) => sum + item.count, 0);\n  _govSafeChat(bot, `Finished mining gold ore. Total raw gold: ${finalCount}`);\n}",
+   "code_hash": "55b6c6c62d7fb9a3f33070b3be96cca6e41570e59acc971abc2b090f68160329",
+   "norm_hash": "a1ba8c6db58ab6e6a219c77d610e2a0e07488501ac679a4efe675c85e6722487",
+   "source_path": "generated:e9_0929",
+   "source_seed": null,
+   "source_kind": "generated_online",
+   "source_name": "mineGoldOre",
+   "round": 5,
+   "n_success": 1,
+   "deps": [],
+   "mined_blocks": [
+    "gold_ore",
+    "deepslate_gold_ore"
+   ],
+   "normalized": [
+    "abort_probes:5",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "abort_probes:5",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "rewrites": [
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat",
+    "rewrite_chat"
+   ],
+   "target_n": 1,
+   "subgoal": "mineGoldOre",
+   "source_attempt": "e9_0929",
+   "inv_source": "e9_online"
+  }
+ ]
+}
